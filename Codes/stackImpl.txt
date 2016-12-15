@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node* next;
+};
+struct node* start = NULL;
+
+void push(struct node* head, int data){
+	struct node* temp = head;
+	struct node* newNode = (struct node *) malloc(sizeof(struct node));
+	newNode->data = data;
+	newNode->next = NULL;
+	if (temp == NULL)
+		start = newNode;
+	else{
+		while (temp->next != NULL){
+			temp = temp->next;
+		}
+		temp->next = newNode;
+	}
+}
+void pop(struct node* head){
+	struct node* cur;
+	struct node* prev;
+	cur = head;
+	if (cur == NULL)
+		printf("The list is Empty\n");
+	else
+	{
+		while (cur->next != NULL){
+			prev = cur;
+			cur = cur->next;
+		}
+		prev->next = cur->next;
+		free(cur);
+	}
+}
+void top(struct node* head){
+	struct node* temp = head;
+	if (temp == NULL)
+		printf("List is empty\n");
+	else{
+		while (temp->next != NULL){
+			temp = temp->next;
+		}
+		printf("%d\n", temp->data);
+	}
+}
+void display(struct node* head){
+	struct node* temp = head;
+	if (temp == NULL)
+		printf("List is empty\n");
+	else{
+		while (temp != NULL){
+			printf("%d\n", temp->data);
+			temp = temp->next;
+		}
+	}
+}
+
+int main(){
+	int choice;
+	int	data;
+	bool accept = true;
+	while (accept){
+	printf("Enter your choice\n");
+	printf("1.push\n2.pop\n3.top\n4.display\n");
+	scanf("%d", &choice);
+		switch (choice){
+		case 1:printf("enter the data\n");
+			   scanf("%d", &data);
+			   push(start, data);
+			   break;
+		case 2:pop(start);
+			   break;
+		case 3:top(start);
+			   break;
+		case 4:display(start);
+			   break;
+		default:accept=false;
+		}
+	}
+	system("pause");
+}

@@ -1,0 +1,36 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void reverseArray(vector<int> &ary, int start, int end){
+	while (start < end){
+		int temp = ary[end];
+		ary[end] = ary[start];
+		ary[start] = temp;
+		start++;
+		end--;
+	}
+}
+
+void rotateLeft(vector<int> &ary, int d, int n){
+	reverseArray(ary, 0, d - 1);
+	reverseArray(ary, d, n - 1);
+	reverseArray(ary, 0, n - 1);
+}
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int d;
+	cin >> d;
+	rotateLeft(ary, d, n);
+	for (int i = 0; i < n; i++)
+		cout << ary[i] << " ";
+	system("pause");
+}

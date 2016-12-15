@@ -1,0 +1,33 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<limits>
+using namespace std;
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	sort(ary.begin(), ary.end());
+	int l = 0;
+	int r = ary.size() - 1;
+	int sum = 0;
+	int min_sum = std::numeric_limits<int>::max();
+	while (l < r){
+		sum = ary[l] + ary[r];
+		if (abs(sum) < abs(min_sum)){
+			min_sum=sum;	
+		}
+		if (sum < 0)
+			l++;
+		else
+			r--;
+	}
+	cout <<min_sum << endl;
+	system("pause");
+}

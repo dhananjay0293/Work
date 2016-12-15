@@ -1,0 +1,27 @@
+servlet 
+
+response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		String imageUrl=request.getParameter("imageUrl");
+		// TODO Auto-generated method stub
+		Map<String,String> map=getCustomerDetails(imageUrl);
+	    System.out.println(map.get("age"));
+	    
+	    String gender=map.get("gender");
+
+
+index changes
+
+<script>
+		 var app=angular.module("myApp",[]);
+		 app.controller("controller",function($scope,$http){
+			 
+			$scope.call=function(imageUrl){
+			$http.get('resultServlet=?'+ imageUrl).success(function(){
+				console.log("successful");
+			}) ;
+			}
+		 });
+		</script>
+		<input type="text" name="userName" ng-model="imageUrl" required>
+		<input type="submit" id="mySubmit" value="Submit" ng-click="call(imageUrl)">

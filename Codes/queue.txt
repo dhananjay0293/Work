@@ -1,0 +1,74 @@
+#include<stdio.h>
+#define size 5
+
+int ary[size];
+
+int rear = -1, front = -1,item;
+void insert(){
+	if ((front == 0 && rear == size - 1) || front == rear + 1)
+		printf("The Circular Queue is full\n");
+	else{
+		printf("Enter the number\n");
+		scanf("%d", &item);
+		if (rear == -1){
+			rear = 0;
+			front = 0;
+		}
+		else if (rear == size - 1)
+			rear = 0;
+		else
+			rear++;
+		ary[rear] = item;
+		printf("The item inserted is %d ", item);
+	}
+
+}
+void deleteElement(){
+	if (front == -1)
+		printf("Queue is empty\n");
+	else{
+		item = ary[front];
+		if (front == rear){
+			front = -1;
+			rear = -1;
+		}
+		else if (front == size - 1)
+			front = 0;
+		else
+			front++;
+		printf("Item deleted is %d\n", item);
+	}
+}
+void display(){
+	if (front == -1 || front == rear + 1)
+		printf("Queue is empty\n");
+	else{
+		printf("\n");
+		for (int i = front; i <= rear; i++){
+			printf("%d\n", ary[i]);
+		}
+	}
+}
+
+int main(){
+	int choice;
+	bool boolean = true;
+	do{ 
+		printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+		printf("Enter the choice\n");
+		scanf("%d", &choice);
+		switch (choice){
+		case 1:insert();
+			break;
+		case 2:deleteElement();
+			break;
+		case 3:display();
+			break;
+		case 4:boolean = false;
+			break;
+		default:printf("wrong choice\n");
+			break;
+		}
+	} while (boolean);
+	getch();
+}

@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int merge(vector<int> &ary,int l,int m,int r){
+	int i = 0;
+	int j = m + 1;
+	int k = 0;
+	vector<int> left,right;
+	while (i <= m){   //Change these two whiles to for(logic incorrect in while with indxes)
+		left[i] = ary[i];
+		i++;
+	}
+	while (j <= r){
+		right[j] = ary[j];
+		j++;
+	}
+	i = 0;
+	j = m + 1;
+	int inv_count = 0;
+	while (i <= m && j <= r){
+		if (left[i] <= right[j]){
+			ary[k] = left[i];
+			i++;
+			k++;
+		}
+		else{
+			ary[k] = right[j];
+			j++;
+			k++;
+			inv_count += m - i + 1;
+		}
+	}
+	while (i <= m){
+		ary[k] = left[i];
+		i++;
+		k++;
+	}
+	while (j <= r){
+		ary[k] = right[j];
+		j++;
+		k++;
+	}
+	return inv_count;
+}
+
+
+
+int mergeSort(vector<int> &ary, int l, int r){
+	int count = 0;
+	int mid = 0;
+	if (l < r){
+		mid = (l + r) / 2;
+		count=mergeSort(ary, l, mid);
+		count+=mergeSort(ary, mid + 1, r);
+		count+=merge(ary, l, mid, r);
+	}
+	return count;
+}
+
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int size = ary.size();
+	int left = 0;
+	int right = size - 1;
+	int count=mergeSort(ary, left, right);
+	system("pause");
+}

@@ -1,0 +1,26 @@
+//Max Diff such dat the next element in the array is greater than previous element.
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int min = ary[0];
+	int max_diff = ary[1] - ary[0];
+	for (int i = 1; i < n; i++){
+		if (ary[i] - min > max_diff)
+			max_diff = ary[i] - min;
+		if (ary[i] < min)
+			min = ary[i];
+	}
+	cout << max_diff << endl;
+	system("pause");
+}

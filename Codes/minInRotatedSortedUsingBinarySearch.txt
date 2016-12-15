@@ -1,0 +1,34 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int low = 0;
+	int high = n - 1;
+	int mid = (low + high) / 2;
+	while (low <= high){
+		if (low==mid &&ary[mid] < ary[mid + 1]){
+			cout << ary[mid] << endl;
+			break;
+		}
+		if (low==mid && ary[mid] > ary[mid + 1]){
+			cout << ary[mid+1] << endl;
+			break;
+		}
+
+		if (ary[high] > ary[mid])
+			high = mid - 1;
+		else
+			low = mid + 1;
+		mid = (low + high) / 2;
+	}
+	system("pause");
+}
