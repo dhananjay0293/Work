@@ -1,0 +1,80 @@
+#include<iostream>
+using namespace std;
+
+int max = 0;
+int countEvenNodes = 0;
+
+struct tree{
+	int data;
+    tree* child[3];
+};
+
+tree* newNode(int data){
+	tree* node = (tree*)malloc(sizeof(tree));
+	node->data = data;
+	for (int i = 0; i < 3; i++)
+		node->child[i] = NULL;
+	return node;
+}
+
+int numberOfNodes(tree* root){
+	if (root == NULL)
+		return 0;
+	if (root->data==0)
+	return numberOfNodes(root->child[0]) + numberOfNodes(root->child[1]) + numberOfNodes(root->child[2]);
+	else
+	return 1 + numberOfNodes(root->child[0]) + numberOfNodes(root->child[1]) + numberOfNodes(root->child[2]);
+}
+
+int countEven(tree* root){
+	if (root == NULL)
+		return 0;
+	for (int i = 0; i < 3; i++){
+		if (root->child[i]){
+			int childCount = 0;
+			childCount = numberOfNodes(root->child[i]);
+			if (root->child[i]->data!=0 && childCount != 0 && childCount % 2 == 0)
+				countEvenNodes++;
+		}
+	}
+		for (int i = 0; i < 3; i++)
+			      countEven(root->child[i]);
+	return countEvenNodes;
+}
+
+int countEvenUtil(tree* root){
+	int count=numberOfNodes(root);
+	(count % 2 != 0) ? max = 0 : max = countEven(root);
+	return max;
+}
+
+
+int main(){
+	tree* root = NULL; 
+	root = newNode(1);
+	root->child[0] = newNode(2);
+	root->child[0]->child[0] = newNode(3);
+	root->child[0]->child[1] = newNode(6);
+	root->child[0]->child[0]->child[0] = newNode(4);
+	root->child[0]->child[0]->child[0]->child[0] = newNode(5);
+	root->child[0]->child[1]->child[0] = newNode(8);
+	root->child[0]->child[1]->child[0]->child[0] = newNode(9);
+	root->child[0]->child[1]->child[0]->child[0]->child[0] = newNode(10);
+	root->child[0]->child[1]->child[1] = newNode(7);
+	root->child[0]->child[1]->child[1]->child[0] = newNode(0);
+	root->child[0]->child[1]->child[1]->child[0]->child[2] = newNode(15);
+	root->child[0]->child[1]->child[1]->child[0]->child[2]->child[2] = newNode(16);
+	root->child[0]->child[1]->child[1]->child[0]->child[0] = newNode(13);
+	root->child[0]->child[1]->child[1]->child[0]->child[0]->child[0] = newNode(14);
+	root->child[0]->child[1]->child[1]->child[0]->child[0]->child[0]->child[0] = newNode(17);
+	root->child[0]->child[1]->child[1]->child[0]->child[0]->child[0]->child[0]->child[0] = newNode(18);
+	root->child[0]->child[1]->child[1]->child[1] = newNode(11);
+	root->child[0]->child[1]->child[1]->child[1]->child[0] = newNode(0);
+	root->child[0]->child[1]->child[1]->child[1]->child[1] = newNode(12);
+	int nodes = numberOfNodes(root);
+	cout << nodes << endl;
+	int countMax = countEvenUtil(root);
+	cout << countMax << endl;
+	system("pause");
+	//return 0;
+}
