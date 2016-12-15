@@ -1,0 +1,94 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+#define UNASSIGNED 0
+
+const int n = 9;
+
+void fillGrid(vector<vector<int>> Grid){
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			cin >> Grid[i][j];
+}
+
+bool findAnEmptySlot(vector<vector<int>> &Grid, int &row, int &col){
+	for (row = 0; row < n; row++)
+		for (col = 0; col < n; col++)
+			if (Grid[row][col] == UNASSIGNED)
+				return true;
+	return false;
+}
+
+bool isPresentRow(vector<vector<int>> &Grid, int row, int col,int num){
+	for (int row = 0; row < n; row++)
+		if (Grid[row][col] == num)
+			return true;
+	return false;
+}
+
+bool isPresentCol(vector<vector<int>> &Grid, int row, int col, int num){
+	for (int col = 0; col < n; col++)
+		if (Grid[row][col] == num)
+			return true;
+	return false;
+}
+
+bool isPresentBox(vector<vector<int>> &Grid, int row, int col, int num){
+	for (int i = row; i < row + 3; i++)
+		for (int j = col; j < col + 3; j++)
+			if (Grid[i][j] == num)
+				return true;
+	return false;
+}
+
+bool noConflicts(vector<vector<int>> &Grid, int row, int col,int num){
+	if (!isPresentRow(Grid, row, col,num) && !isPresentCol(Grid, row, col,num) && !isPresentBox(Grid, row - row % 3, col - col % 3,num))
+		return true;
+	return false;
+}
+
+bool solveSudoku(vector<vector<int>> &Grid){
+	int row=0, col=0;
+	if (!findAnEmptySlot(Grid, row, col))
+		return true;
+	else{
+		for (int num = 1; num <= 9; num++){
+			if (noConflicts(Grid, row, col,num)){
+				Grid[row][col] = num;
+				if (solveSudoku(Grid))
+					return true;
+				Grid[row][col] = UNASSIGNED;
+        	}
+		}
+	}
+	return false;
+}
+
+void print(vector<vector<int>> &Grid){
+	for (int i = 0; i < n; i++){
+		for (int j = 0; j < n; j++)
+			cout << Grid[i][j] << " ";
+		cout << endl;
+	}
+
+}
+
+
+int main(){
+	vector<vector<int>> Grid = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
+	{ 5, 2, 0, 0, 0, 0, 0, 0, 0 },
+	{ 0, 8, 7, 0, 0, 0, 0, 3, 1 },
+	{ 0, 0, 3, 0, 1, 0, 0, 8, 0 },
+	{ 9, 0, 0, 8, 6, 3, 0, 0, 5 },
+	{ 0, 5, 0, 0, 9, 0, 6, 0, 0 },
+	{ 1, 3, 0, 0, 0, 0, 2, 5, 0 },
+	{ 0, 0, 0, 0, 0, 0, 0, 7, 4 },
+	{ 0, 0, 5, 2, 0, 6, 3, 0, 0 }
+	};
+	//fillGrid(Grid);
+	bool solved=solveSudoku(Grid);
+	if (solved)
+		print(Grid);
+	system("pause");
+}

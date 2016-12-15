@@ -1,0 +1,50 @@
+#include<iostream>
+#include<unordered_map>
+#include<vector>
+#include<time.h>
+#include<algorithm>
+using namespace std;
+unordered_map<int, int> maps;
+vector<int> ary;
+
+void insert(int n){
+	ary.push_back(n);
+	maps[n] = ary.size() - 1;
+}
+void deleteElement(int n){
+	maps.erase(n);
+	int i = maps[n];
+	int val = ary[ary.size() - 1];
+	swap(val, ary[i]);
+	ary.pop_back();
+	maps[val] = i;
+}
+void search(int n){
+	int i = maps[n];
+	cout << ary[i] << endl;
+}
+void getRandom(){
+	int n = ary.size();
+	srand(time(NULL));
+	int random = rand() % n + 0;
+	cout << random << endl;
+	cout << ary[random] << endl;
+}
+int main(){
+	insert(1);
+	insert(10);
+	insert(25);
+	insert(24);
+	insert(21);
+	insert(324);
+	insert(123);
+	insert(1234);
+	insert(454);
+	search(10);
+	deleteElement(1);
+	for (int i = 0; i < ary.size(); i++)
+		cout << ary[i] << " ";
+	cout << endl;
+	getRandom();
+	system("pause");
+}

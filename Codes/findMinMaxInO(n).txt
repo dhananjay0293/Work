@@ -1,0 +1,40 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+struct pairs{
+	int max;
+	int min;
+};
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	pairs minmax;
+	if (n == 1){
+		minmax.min = ary[0];
+		minmax.max = ary[0];
+	}
+	if (ary[0]>ary[1]){
+			minmax.min = ary[1];
+			minmax.max = ary[0];
+	}
+	else{
+			minmax.min = ary[0];
+			minmax.max = ary[1];
+	}
+	for (int i = 2; i < n; i++){
+		if (ary[i]>minmax.max)
+			minmax.max = ary[i];
+		else if (ary[i] < minmax.min)
+			minmax.min = ary[i];
+	}
+	cout << minmax.min << " " << minmax.max << endl;
+	system("pause");
+}

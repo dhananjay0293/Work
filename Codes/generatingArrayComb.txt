@@ -1,0 +1,34 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void printComb(vector<int> &ary,vector<int> &output,int index){
+	if (index == ary.size()){
+		for (int i = 0; i < output.size(); i++)
+			cout << output[i];
+		cout << endl;
+		return;
+	}
+	for (int i = 0; i < ary.size(); i++){
+		output[index] = ary[i];
+		printComb(ary, output, index + 1);
+	}
+}
+
+void printCombination(vector<int> &ary){
+	vector<int> output(ary.size());
+	printComb(ary, output, 0);
+}
+
+int main(){
+	vector<int> ary; 
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	 }
+	printCombination(ary);
+	system("pause");
+}

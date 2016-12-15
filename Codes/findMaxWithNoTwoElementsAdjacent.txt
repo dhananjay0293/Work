@@ -1,0 +1,26 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int incl = ary[0];
+	int excl = 0;
+	int new_excl = 0;
+	for (int i = 1; i < n; i++){
+		new_excl = max(incl, excl);
+		incl = excl + ary[i];
+		excl = new_excl;
+	}
+	int sum = max(excl, incl);
+	cout << sum << endl;
+	system("pause");
+}

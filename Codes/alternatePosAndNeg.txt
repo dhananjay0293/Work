@@ -1,0 +1,39 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void swap(int *a, int *b){
+	int temp;
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int i = -1;
+	for (int j = 0; j < n; j++){
+		if (ary[j] < 0){
+			i++;
+			swap(&ary[i], &ary[j]);
+		}
+	}
+	int pos = i + 1;
+	int neg = 0;
+	while (neg < pos && pos < n && ary[neg] < 0){
+		swap(&ary[pos], &ary[neg]);
+		pos++;
+		neg += 2;
+	}
+	for (int i = 0; i < n; i++){
+		cout << ary[i] << " ";
+	}
+	system("pause");
+}

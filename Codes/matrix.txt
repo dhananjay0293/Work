@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(){
+	int m, n,i,j;
+	printf("Insert the rows and columns\n");
+	scanf_s("%d%d", &m, &n);
+	int **ary = (int **)malloc(m+2 * sizeof(int *));
+	for (i = 0; i<m; i++)
+		ary[i] = (int *)malloc(n+2 * sizeof(int));
+
+
+	for (i = 0; i < m + 2; i++)
+		for (j = 0; j < n + 2; j++)
+			if (i == 0 || j == 0 || i == m + 1 || j == n + 1)
+				ary[i][j] = -1;
+	printf("Enter the elements of the array\n");
+	for (i = 1; i < m + 1; i++)
+		for (j = 1; j < n + 1; j++)
+			scanf_s("%d", &ary[i][j]);
+	for (i = 1; i <= m; i++){
+		for (j = 1; j <= n; j++){
+			if (ary[i][j] == 1){
+				if (ary[i + 1][j] == 1){
+					printf("(%d,%d),",i-1,j-1);
+					break;
+				}
+				else if (ary[i + 1][j] == -1 && ary[i][j + 1] != -1){
+					printf("(%d,%d),", i - 1, j - 1);
+					continue;
+				}
+				else if (ary[i + 1][j] == -1 && ary[i][j + 1] == -1){
+					printf("(%d,%d)", i - 1, j - 1);
+					break;
+				}
+				else if (ary[i][j + 1] == 1){
+					printf("(%d,%d),", i - 1, j - 1);
+					continue;
+				}
+				else
+					continue;
+			}
+			else if (ary[i][j] == 0){
+				printf("The rat cannot start\n");
+				return 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+#include<iostream>
+#include<unordered_set>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main(){
+	int n;
+	cin >> n;
+	vector<int> ary(n);
+	for (int i = 0; i < n; i++)
+		cin >> ary[i];
+	unordered_set<int> S;
+	for (int i = 0; i < n; i++)
+		S.insert(ary[i]);
+	int ans = 0;
+	for (int i = 0; i < n; i++){
+		if (S.find(ary[i] - 1) == S.end()){
+			int j = ary[i];
+			while (S.find(j) != S.end())
+				j++;
+			ans = max(ans, j - ary[i]);
+		}
+	}
+	cout << ans << endl;
+	system("pause");
+}

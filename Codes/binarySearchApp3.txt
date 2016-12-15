@@ -1,0 +1,40 @@
+#include<iostream> 
+#include<vector>
+using namespace std;
+
+bool condition(const vector<int>& array, int mid, int start, int end){
+	if (array[mid] >= array[start] && array[mid] > array[end] && array[mid] > array[mid + 1])
+		return true;
+	return false;
+}
+
+int main(){
+	int n;
+	cout << "Enter the number of elements" << endl;
+	cin >> n;
+	vector<int> ary(n);
+	for (int i = 0; i < n; i++){
+		cin >> ary[i];
+	}
+	int low = 0;
+	int start = 0;
+	int high = n - 1;
+	int end = n - 1;
+	int mid = (low + high) / 2;
+	int count = 0;
+	while (low <= high && !condition(ary, mid, start, end)){
+		if (ary[start] > ary[mid] && ary[end] > ary[mid])
+			high = mid - 1;
+		else if (ary[mid] >= ary[start] && ary[mid] > ary[end] && ary[mid] < ary[mid + 1])
+			low = mid + 1;
+		else
+			break;
+		mid = (low + high) / 2;
+		count++;
+	}
+	if (condition(ary, mid, start, end))
+		cout << ary[mid] <<" "<<count << endl;
+	else
+		cout << "The array is not shifted" << endl;
+	system("pause");
+}

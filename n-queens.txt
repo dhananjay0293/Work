@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+const int n = 8;
+
+void clearBoard(vector<vector<bool>> &Grid){
+	int row, col;
+	for (row = 0; row < Grid.size(); row++)
+		for (col = 0; col < Grid[row].size(); col++)
+			Grid[row][col] = false;
+}
+
+bool leftBottomDiagonalCLear(vector<vector<bool>> &Grid,int row,int col){
+	int rowNum, colNum;
+	for (rowNum = row, colNum = col; colNum >= 0 && rowNum < n; rowNum++, colNum--)
+		if (Grid[rowNum][colNum])
+			return false;
+	return true;
+}
+
+bool leftUpperDiagonalclear(vector<vector<bool>> &Grid, int row, int col){
+	int rowNum, colNum;
+	for (rowNum = row, colNum = col; colNum >= 0 && rowNum >=0; rowNum--, colNum--)
+		if (Grid[rowNum][colNum])
+			return false;
+	return true;
+}
+
+bool isRowClear(vector<vector<bool>> &Grid, int row, int col){
+	int colNum;
+	for (colNum = col; colNum < col;colNum++)
+		if (Grid[row][colNum])
+			return false;
+	return true;
+}
+
+bool isSafe(vector<vector<bool>> &Grid, int row, int col){
+	if (leftBottomDiagonalCLear(Grid, row, col) && leftUpperDiagonalclear(Grid, row, col) && isRowClear(Grid, row, col))
+		return true;
+	return false;
+}
+
+void placeQueen(vector<vector<bool>> &Grid, int row, int col){
+	Grid[row][col] = true;
+}
+
+void removeQueen(vector<vector<bool>> &Grid, int row, int col){
+	Grid[row][col] = false;
+}
+
+bool solveBoard(vector<vector<bool>> &Grid, int col){
+	if (col >= n)
+		return true;
+	else{
+		int rowNum;
+		for (rowNum = 0; rowNum < n; rowNum++){
+			if (isSafe(Grid, rowNum, col)){
+				placeQueen(Grid, rowNum, col);
+				if (solveBoard(Grid, col + 1))
+					return true;
+				removeQueen(Grid, rowNum, col);
+			}
+		}
+	}
+	return false;
+}
+
+
+int main(){
+	vector<vector<bool>> Grid(n,vector<bool>(n));
+	clearBoard(Grid);
+	bool solved = solveBoard(Grid, 0);
+	cout << solved << endl;
+	system("pause");
+}

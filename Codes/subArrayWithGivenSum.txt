@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+	vector<int> ary;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++){
+		int value;
+		cin >> value;
+		ary.push_back(value);
+	}
+	int curr_sum = ary[0];
+	int start = 0;
+	int sum;
+	cin >> sum;
+	for (int i = 1; i <= n; i++){
+		while (curr_sum > sum && start < i-1 ){
+			curr_sum = curr_sum - ary[start];
+			start++;
+			cout << curr_sum << endl;
+		}
+		if (curr_sum == sum){
+			cout << start << "-" << i-1 << endl;
+		}
+		if (i<n)
+		curr_sum += ary[i];
+	}
+	system("pause");
+}

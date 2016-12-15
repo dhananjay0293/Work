@@ -1,0 +1,104 @@
+#include<iostream>
+#include<unordered_map>
+using namespace std;
+
+struct Qnode{
+	Qnode *prev,*next;
+	unsigned pageNumber;
+};
+
+struct Queue{
+	Qnode *front, *rear;
+	unsigned count;
+	unsigned numberOfFrames;
+};
+
+Qnode* newNode(unsigned page){
+	Qnode* node = (Qnode*)malloc(sizeof(Qnode));
+	node->next = node->prev = NULL;
+	node->pageNumber = page;
+	return node;
+}
+
+Queue* createQueue(Queue *queue,unsigned frames){
+	Queue *queues = (Queue*)malloc(sizeof(Queue));
+	queues->count = 0;
+	queues->front = queues->rear = NULL;
+	queues->numberOfFrames = frames;
+	return queues;
+}
+
+bool AllFramesFull(Queue* queue){
+	return queue->count == queue->numberOfFrames;
+}
+
+void dequeue(Queue* queue){
+	if (queue->rear == NULL)
+		return;
+	if (queue->front == queue -> rear)
+		queue->front = NULL;
+	Qnode* temp = queue->rear;
+	queue->rear=queue->rear->prev;
+	if (queue->rear)
+		queue->rear->next = NULL;
+	free(temp);
+	queue->count--;
+}
+
+void Enqueue(Queue *queue, unordered_map<int, Qnode*> &map, unsigned pageNumber){
+	if (AllFramesFull(queue)){
+		map[queue->rear->pageNumber] = NULL;
+		dequeue(queue);
+	}
+	Qnode* temp = newNode(pageNumber);
+	temp->next = queue->front;
+	if (queue->rear == NULL)
+		queue->front = queue->rear = temp;
+	else{
+		queue->front->prev = temp;
+		queue->front = temp;
+	}
+	map[pageNumber] = temp;
+	queue->count++;
+}
+
+void referencePage(Queue *queue, unordered_map<int, Qnode*> &map, unsigned pageNumber){
+	Qnode* refPage = map[pageNumber];
+	if (refPage == NULL)
+		Enqueue(queue, map, pageNumber);
+	else if (refPage != queue->front){
+		refPage->prev->next = refPage->next;
+		if (refPage->next)
+			refPage->next->prev = refPage->prev;
+		if (refPage == queue->rear){
+			queue->rear = refPage->prev;
+			queue->rear -> next = NULL;
+		}
+		refPage->next = queue->front;
+		refPage->prev = NULL;
+		queue->front->prev = refPage;
+		queue->front = refPage;
+	}
+}
+
+int main(){
+	Queue *queue = NULL;
+	unsigned frames;
+	cout << "Enter the number of frames" << endl;
+	cin >> frames;
+	queue=createQueue(queue,frames);
+	unordered_map<int, Qnode*> map;
+	referencePage(queue, map, 1);
+	referencePage(queue, map, 2);
+	referencePage(queue, map, 3);
+	referencePage(queue, map, 1);
+	referencePage(queue, map, 4);
+	referencePage(queue, map, 5);
+	referencePage(queue, map, 6);
+	cout << queue->front->pageNumber << " ";
+	cout << queue->front->next->pageNumber << " ";
+	cout << queue->front->next->next->pageNumber << " ";
+	cout << queue->front->next->next->next->pageNumber << " ";
+	cout << queue->front->next->next->next->next->pageNumber << endl;
+	system("pause");
+}
