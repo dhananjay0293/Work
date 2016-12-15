@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+
+string makeValidWord(string soFar, string rest,string &lex){
+	if (rest.empty()){
+		size_t found;
+		found=lex.find(soFar);
+		if (found != std::string::npos)
+			return soFar;
+		return "";
+	}
+	for (int i = 0; i < rest.length(); i++){
+		string remaining = rest.substr(0, i) + rest.substr(i + 1);
+		string found = makeValidWord(soFar + rest[i], remaining, lex);
+		if (!found.empty())
+			return found;
+	}
+	return "";
+}
+
+int main(){
+	string rest = "xicnoel";
+	string soFar = "";
+	string lex = "lexicon";
+	string found=makeValidWord(soFar, rest,lex);
+	cout << found << endl;
+	system("pause");
+}
