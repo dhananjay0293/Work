@@ -1,0 +1,27 @@
+#include<iostream>
+#include<vector>
+#include<cmath>
+using namespace std;
+
+vector<bool> sieveOfEratosthenes(int n){
+	vector<bool> prime(n+1);
+	for (int i = 0; i < n + 1; i++)
+		prime[i] = true;
+	prime[0] = false;
+	prime[1] = false;
+	for (int i = 2; i <= sqrt(n);i++)
+		if (prime[i])
+			for (int k = i*i; k <= n; k += i)
+				prime[k] = false;
+	return prime;
+}
+
+int main(){
+	int n;
+	cin >> n;
+	vector<bool> result(n+1);
+	result=sieveOfEratosthenes(n);
+	for (int i = 0; i < result.size(); i++)
+		cout << i << " " << result[i] << endl;
+	system("pause");
+}
