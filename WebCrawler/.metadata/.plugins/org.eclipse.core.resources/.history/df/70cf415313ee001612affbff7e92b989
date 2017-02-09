@@ -1,0 +1,9 @@
+package com.project.webcrawler;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Spider {
+     public static final int MAX_PAGES=10;
+     private Set<String> pagesVisited=new HashSet<String>();
+}

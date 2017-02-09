@@ -1,0 +1,30 @@
+package com.project.webcrawler;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.nodes.Document;
+
+public class SpiderLeg {
+	
+	private List<String> links=new LinkedList<String>();
+	
+	private Document htmlDocument; 
+
+	public void crawl(String currentUrl) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean searchForWord(String searchWord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Collection<? extends String> getLinks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

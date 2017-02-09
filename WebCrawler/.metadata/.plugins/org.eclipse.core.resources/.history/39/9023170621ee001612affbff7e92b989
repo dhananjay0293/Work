@@ -1,0 +1,42 @@
+package com.project.webcrawler;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+public class SpiderLeg {
+	
+	private List<String> links=new LinkedList<String>();
+	
+	private Document htmlDocument; 
+
+	public void crawl(String currentUrl) {
+		try {
+			Connection connection=Jsoup.connect(currentUrl).userAgent(USER_AGENT);
+			Document htmlDocument=connection.get();
+			this.htmlDocument=htmlDocument;
+			System.out.println("Received web page at url "+ currentUrl);
+			
+			Elements 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	public boolean searchForWord(String searchWord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Collection<? extends String> getLinks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

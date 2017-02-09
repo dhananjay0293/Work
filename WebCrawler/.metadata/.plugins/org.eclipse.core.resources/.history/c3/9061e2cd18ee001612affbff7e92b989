@@ -1,0 +1,15 @@
+package com.project.webcrawler;
+
+public class SpiderLeg {
+
+	public void crawl(String currentUrl) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean searchForWord(String searchWord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
